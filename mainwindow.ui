@@ -28,6 +28,13 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
+      <widget class="QGroupBox" name="groupBoxCommands">
+       <property name="title">
+        <string>Commands</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QGraphicsView" name="graphicsView"/>
      </item>
     </layout>
@@ -68,78 +75,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEditUpper">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>120</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEditLower">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>150</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxLimits">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>100</y>
-      <width>231</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Upper and Lower Limits</string>
-    </property>
-    <widget class="QPushButton" name="buttonSetUpper">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Set</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pusButton_2">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>50</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Set</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxCommands">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>190</y>
-      <width>251</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Commands</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="buttonScan">
     <property name="geometry">
      <rect>
@@ -166,7 +101,7 @@
      <string>Save</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -612,8 +547,6 @@
          </layout>
         </item>
        </layout>
-       <zorder>comboBoxPorts</zorder>
-       <zorder>buttonAction</zorder>
        <zorder></zorder>
       </widget>
      </item>
@@ -635,7 +568,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>31</x>
@@ -655,16 +588,9 @@
      <item>
       <widget class="QComboBox" name="comboBoxRange"/>
      </item>
-     <item>
-      <widget class="QPushButton" name="buttonSetRange">
-       <property name="text">
-        <string>Set</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>31</x>
@@ -684,21 +610,14 @@
      <item>
       <widget class="QComboBox" name="comboBoxRate"/>
      </item>
-     <item>
-      <widget class="QPushButton" name="buttonSetRate">
-       <property name="text">
-        <string>Set</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>30</x>
       <y>270</y>
-      <width>166</width>
+      <width>191</width>
       <height>25</height>
      </rect>
     </property>
@@ -719,42 +638,15 @@
      </item>
     </layout>
    </widget>
-   <zorder>buttonAction</zorder>
-   <zorder>comboBoxPorts</zorder>
-   <zorder>comboBoxPorts</zorder>
-   <zorder>buttonAction</zorder>
-   <zorder>groupBoxConnect</zorder>
-   <zorder>buttonAction</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>groupBoxKinetics</zorder>
    <zorder>groupBoxLCD</zorder>
-   <zorder>groupBoxRemote</zorder>
-   <zorder>comboBoxRange</zorder>
-   <zorder>labelRange</zorder>
    <zorder>label_2</zorder>
-   <zorder>buttonSetRange</zorder>
-   <zorder></zorder>
-   <zorder>lineEditUpper</zorder>
-   <zorder>lineEditLower</zorder>
-   <zorder>groupBoxLimits</zorder>
-   <zorder>labelRate</zorder>
-   <zorder>comboBoxRate</zorder>
-   <zorder>buttonSetRate</zorder>
-   <zorder>labelZero</zorder>
-   <zorder>buttonZero</zorder>
-   <zorder>labelZero</zorder>
-   <zorder>groupBoxCommands</zorder>
    <zorder>buttonScan</zorder>
    <zorder>buttonSave</zorder>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>792</width>
-     <height>21</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -765,6 +657,28 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>792</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionUpdateCOMPortsList"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <action name="actionUpdateCOMPortsList">
+   <property name="text">
+    <string>Update COM ports list</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

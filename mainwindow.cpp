@@ -12,3 +12,43 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_comboBoxRate_currentIndexChanged(const QString &text)
+{
+
+}
+
+void MainWindow::on_buttonAction_clicked()
+{
+
+}
+
+void MainWindow::on_buttonRemote_clicked()
+{
+
+}
+
+void MainWindow::on_comboBoxRange_currentIndexChanged(const QString &text)
+{
+
+}
+
+
+void MainWindow::on_buttonZero_clicked()
+{
+
+}
+
+void MainWindow::on_buttonScan_clicked()
+{
+
+}
+
+void MainWindow::on_buttonSave_clicked()
+{
+
+}
+void on_actionUpdateCOMPortsList_triggered()
+{
+
+}
