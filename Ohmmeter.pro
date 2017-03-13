@@ -21,3 +21,8 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     deviceform.ui
+
+DISTFILES +=
+
+RESOURCES += \
+    resources.qrc
