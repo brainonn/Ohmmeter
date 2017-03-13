@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "deviceform.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -6,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    on_tabWidget_tabBarClicked(0);
 }
 
 MainWindow::~MainWindow()
@@ -13,42 +15,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_comboBoxRate_currentIndexChanged(const QString &text)
-{
 
-}
-
-void MainWindow::on_buttonAction_clicked()
-{
-
-}
-
-void MainWindow::on_buttonRemote_clicked()
-{
-
-}
-
-void MainWindow::on_comboBoxRange_currentIndexChanged(const QString &text)
-{
-
-}
-
-
-void MainWindow::on_buttonZero_clicked()
-{
-
-}
-
-void MainWindow::on_buttonScan_clicked()
-{
-
-}
-
-void MainWindow::on_buttonSave_clicked()
-{
-
-}
 void MainWindow::on_actionUpdateCOMPortsList_triggered()
 {
 
+}
+
+
+void MainWindow::on_tabWidget_tabBarClicked(int index)
+{
+    int lastIndex = ui -> tabWidget -> count() - 1;
+    if(index != lastIndex) return;
+    ui -> tabWidget -> insertTab(lastIndex, new DeviceForm(),tr("Device %1").arg(lastIndex + 1));
+    ui -> tabWidget -> setCurrentIndex(lastIndex);
 }
