@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QToolButton>
+#include <QTabWidget>
 
 namespace Ui {
 class MainWindow;
@@ -17,11 +18,12 @@ public:
     ~MainWindow();
 private slots:
     void on_actionUpdateCOMPortsList_triggered();
-\
-    void on_tabWidget_tabBarClicked(int index);
+    void on_addTabButton_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QTabWidget *tabWidget;
+    QToolButton *addTabButton;
 };
 
 #endif // MAINWINDOW_H

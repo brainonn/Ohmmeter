@@ -643,15 +643,6 @@
     </layout>
    </widget>
   </widget>
-  <zorder>groupBoxConnect</zorder>
-  <zorder>groupBoxRemote</zorder>
-  <zorder>groupBoxConnect</zorder>
-  <zorder>buttonScan</zorder>
-  <zorder>layoutWidget</zorder>
-  <zorder>groupBoxLCD</zorder>
-  <zorder>groupBoxKinetics</zorder>
-  <zorder>buttonSave</zorder>
-  <zorder>groupBoxCommands</zorder>
  </widget>
  <resources/>
  <connections/>
