@@ -530,7 +530,7 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
-     <widget class="QGraphicsView" name="graphicsView"/>
+     <widget class="QCustomPlot" name="widget" native="true"/>
     </item>
    </layout>
   </widget>
@@ -644,6 +644,14 @@
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

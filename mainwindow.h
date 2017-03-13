@@ -19,6 +19,7 @@ public:
 private slots:
     void on_actionUpdateCOMPortsList_triggered();
     void on_addTabButton_clicked();
+    void on_tabWidget_tabCloseRequested(int index);
 
 private:
     Ui::MainWindow *ui;

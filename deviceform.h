@@ -2,6 +2,9 @@
 #define DEVICEFORM_H
 
 #include <QWidget>
+#include <QSerialPort>
+#include <QSerialPortInfo>
+#include "qcustomplot.h"
 
 namespace Ui {
 class DeviceForm;
@@ -14,6 +17,7 @@ class DeviceForm : public QWidget
 public:
     explicit DeviceForm(QWidget *parent = 0);
     ~DeviceForm();
+    void updatePorts();
 private slots:
     void on_buttonAction_clicked();
     void on_buttonRemote_clicked();
@@ -24,6 +28,7 @@ private slots:
     void on_comboBoxRange_currentIndexChanged(const QString &text);
 private:
     Ui::DeviceForm *ui;
+    QSerialPort *serialPort;
 };
 
 #endif // DEVICEFORM_H

@@ -12,6 +12,15 @@ DeviceForm::~DeviceForm()
 {
     delete ui;
 }
+void DeviceForm::updatePorts()
+{
+    ui -> comboBoxPorts -> clear();
+    foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
+        ui -> comboBoxPorts -> addItem(info.portName());
+    }
+
+}
+
 void DeviceForm::on_comboBoxRate_currentIndexChanged(const QString &text)
 {
 

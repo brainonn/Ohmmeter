@@ -4,9 +4,10 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui serialport
+CONFIG   += c++11
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = Ohmmeter
 TEMPLATE = app
@@ -14,10 +15,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    deviceform.cpp
+    deviceform.cpp \
+    qcustomplot.cpp
 
 HEADERS  += mainwindow.h \
-    deviceform.h
+    deviceform.h \
+    qcustomplot.h
 
 FORMS    += mainwindow.ui \
     deviceform.ui
