@@ -2,9 +2,9 @@
 #define DEVICEFORM_H
 
 #include <QWidget>
-#include <QSerialPort>
 #include <QSerialPortInfo>
 #include "qcustomplot.h"
+#include "ohmmeter.h"
 
 namespace Ui {
 class DeviceForm;
@@ -18,17 +18,21 @@ public:
     explicit DeviceForm(QWidget *parent = 0);
     ~DeviceForm();
     void updatePorts();
+
 private slots:
     void on_buttonAction_clicked();
     void on_buttonRemote_clicked();
     void on_buttonScan_clicked();
     void on_buttonSave_clicked();
     void on_buttonZero_clicked();
-    void on_comboBoxRate_currentIndexChanged(const QString &text);
-    void on_comboBoxRange_currentIndexChanged(const QString &text);
+    void on_comboBoxRate_currentIndexChanged(int index);
+    void on_comboBoxRange_currentIndexChanged(int index);
+    void on_remoteChanged(bool remoteEnabled);
+
+
 private:
     Ui::DeviceForm *ui;
-    QSerialPort *serialPort;
+    Ohmmeter *ohmmeter;
 };
 
 #endif // DEVICEFORM_H

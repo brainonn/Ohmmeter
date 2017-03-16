@@ -16,11 +16,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     deviceform.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    ohmmeter.cpp
 
 HEADERS  += mainwindow.h \
     deviceform.h \
-    qcustomplot.h
+    qcustomplot.h \
+    ohmmeter.h
 
 FORMS    += mainwindow.ui \
     deviceform.ui
