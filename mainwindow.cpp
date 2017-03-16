@@ -9,15 +9,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     tabWidget = new QTabWidget(this);
     tabWidget -> addTab(new DeviceForm(),"Device 1");
+    tabWidget -> setTabsClosable(true);
     addTabButton = new QToolButton(tabWidget);
     addTabButton -> setIcon(QIcon(":/icons/Add.png"));
     tabWidget -> setCornerWidget(addTabButton);
     setCentralWidget(tabWidget);
     connect(addTabButton, SIGNAL(clicked()), this, SLOT(on_addTabButton_clicked()));
-
-
-   /* ui -> tabWidget -> setTabIcon(0,QIcon("icons/Add.png"));
-    on_tabWidget_tabBarClicked(0);*/
+    connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(on_tabWidget_tabCloseRequested(int)));
 }
 
 MainWindow::~MainWindow()
@@ -28,7 +26,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionUpdateCOMPortsList_triggered()
 {
+    int deviceNumber = tabWidget -> count();
+    for(int i = 0; i < deviceNumber; i++) {
+        (qobject_cast<DeviceForm*> (tabWidget -> widget(i))) -> updatePorts(); //casting QWidget* to DeviceForm*, not sure if it works
 
+    }
 }
 
 
@@ -39,4 +41,15 @@ void MainWindow::on_addTabButton_clicked()
     tabWidget -> setCurrentIndex(deviceNumber);
 }
 
+void MainWindow::on_tabWidget_tabCloseRequested(int index)
+{
+    int deviceNumber = tabWidget -> count();
+    if (deviceNumber == 1) this -> close();
+    else {
+        tabWidget -> removeTab(index);
+        for(int i = 0; i < deviceNumber; i++) {
+            tabWidget -> setTabText(i, tr("Device %1").arg(i + 1));
+        }
+    }
+}
 

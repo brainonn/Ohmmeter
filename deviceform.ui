@@ -14,6 +14,9 @@
    <string>Form</string>
   </property>
   <widget class="QPushButton" name="buttonScan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -483,6 +486,9 @@
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <widget class="QPushButton" name="buttonRemote">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Enable</string>
          </property>
@@ -530,11 +536,14 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
-     <widget class="QGraphicsView" name="graphicsView"/>
+     <widget class="QCustomPlot" name="widget" native="true"/>
     </item>
    </layout>
   </widget>
   <widget class="QPushButton" name="buttonSave">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -590,7 +599,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBoxRange"/>
+      <widget class="QComboBox" name="comboBoxRange">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -613,6 +626,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="buttonZero">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Enable</string>
        </property>
@@ -638,12 +654,24 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBoxRate"/>
+      <widget class="QComboBox" name="comboBoxRate">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
