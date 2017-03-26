@@ -48,7 +48,7 @@ void MainWindow::on_buttonSave_clicked()
 {
 
 }
-void on_actionUpdateCOMPortsList_triggered()
+void MainWindow::on_actionUpdateCOMPortsList_triggered()
 {
 
 }
