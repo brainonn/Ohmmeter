@@ -9,7 +9,7 @@ DeviceForm::DeviceForm(QWidget *parent) :
     updatePorts();
     ohmmeter = new Ohmmeter();
     connect(ohmmeter, SIGNAL(remoteChanged(bool)), this, SLOT(on_remoteChanged(bool)));
-
+    connect(ohmmeter, SIGNAL(readingsChanged(Readings)), this, SLOT(on_readingsChanged(Readings)));
 }
 
 DeviceForm::~DeviceForm()
@@ -22,6 +22,9 @@ void DeviceForm::updatePorts()
     ui -> comboBoxPorts -> clear();
     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
         ui -> comboBoxPorts -> addItem(info.portName());
+    }
+    if(ui -> comboBoxPorts -> count() != 0) {
+        ui -> buttonAction -> setEnabled(true);
     }
 
 }
@@ -39,12 +42,11 @@ void DeviceForm::on_buttonAction_clicked()
         if(ohmmeter -> connect(currentPortName)) {
             ui -> buttonAction -> setText("Disconect");
             ui -> buttonRemote -> setEnabled(true);
-    }
+        }
     }
     else {
-
-        on_buttonRemote_clicked();
         ohmmeter -> disconnect();
+        ui -> lcdNumber -> display(0);
         ui -> buttonAction -> setText("Connect");
         ui -> buttonRemote -> setEnabled(false);
 
@@ -54,8 +56,12 @@ void DeviceForm::on_buttonAction_clicked()
 
 void DeviceForm::on_buttonRemote_clicked()
 {
-    if (ui -> buttonRemote -> text() == "Enable") ohmmeter -> setRemote(true);
-    else ohmmeter -> setRemote(false);
+    if (ui -> buttonRemote -> text() == "Enable") {
+        ohmmeter -> setRemote(true);
+    }
+    else {
+        ohmmeter -> setRemote(false);
+    }
 }
 
 void DeviceForm::on_comboBoxRate_currentIndexChanged(int index)
@@ -113,4 +119,9 @@ void DeviceForm::on_remoteChanged(bool enabled)
         ui -> comboBoxRate -> clear();
     }
 
+}
+
+void DeviceForm::on_readingsChanged(const Readings& readings)
+{
+    ui -> lcdNumber -> display(readings.value);
 }

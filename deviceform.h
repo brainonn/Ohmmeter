@@ -28,6 +28,7 @@ private slots:
     void on_comboBoxRate_currentIndexChanged(int index);
     void on_comboBoxRange_currentIndexChanged(int index);
     void on_remoteChanged(bool remoteEnabled);
+    void on_readingsChanged(const Readings& readings);
 
 
 private:
