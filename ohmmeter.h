@@ -3,16 +3,19 @@
 
 #include <QSerialPort>
 #include <QTimer>
+#include <QRegExp>
+#include <kineticsdata.h>
 
 
 enum Range {r20m = 1, r200m, r2, r20, r200, r2k, r20k, r200k, r2M};
 enum Rate {fast, slow};
 const int firstWaitTime = 50;
-const int additionalWaitTime = 5;
-const int updateInterval = 100;
+const int additionalWaitTime = 10;
+const int updateInterval = 250;
 struct Readings {
     double value = 0;
     QString units = "mOhm";
+    operator double();
     bool operator!=(const Readings& arg) const;
 };
 
@@ -26,11 +29,15 @@ private:
     static const QSerialPort::DataBits dataBits = QSerialPort::Data8;
     static const QSerialPort::StopBits stopBits = QSerialPort::OneStop;
     QTimer* timer;
+    QTime *time;
     Readings currentReadings;
+    KineticsData kinetics;
+    bool isKineticsRunning = false;
 
 signals:
     void remoteChanged(bool remoteEnabled);
     void readingsChanged(Readings readings);
+    void dataReady(const KineticsData& arg) const;
 public slots:
     void getCurrentReadings();
 
@@ -43,10 +50,12 @@ public:
     void setRange(int range);
     void setRate (int rate);
     void autoSetRange();
-    Range getRange();
-    Rate getRate();
-    QString getResponse();
+    Range getRange() const;
+    Rate getRate() const;
+    QString getResponse() const;
     Readings parseReadingsString(const QString& str);
+    void setKineticsRunning(bool running);
+    KineticsData& getKinetics();
 
 
 
