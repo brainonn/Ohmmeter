@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     addTabButton -> setIcon(QIcon(":/icons/Add.png"));
     tabWidget -> setCornerWidget(addTabButton);
     setCentralWidget(tabWidget);
+    setFixedSize(geometry().width(), geometry().height()); //dirty hack
     connect(addTabButton, SIGNAL(clicked()), this, SLOT(on_addTabButton_clicked()));
     connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(on_tabWidget_tabCloseRequested(int)));
 }
