@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QSerialPortInfo>
+#include <QFile>
+#include <QMessageBox>
 #include "qcustomplot.h"
 #include "ohmmeter.h"
 
@@ -19,15 +21,16 @@ public:
     ~DeviceForm();
     void updatePorts();
 
-private slots:
+public slots:
     void on_buttonAction_clicked();
     void on_buttonRemote_clicked();
     void on_buttonScan_clicked();
     void on_buttonSave_clicked();
-    void on_buttonZero_clicked();
     void on_comboBoxRate_currentIndexChanged(int index);
     void on_comboBoxRange_currentIndexChanged(int index);
     void on_remoteChanged(bool remoteEnabled);
+    void on_readingsChanged(const Readings& readings);
+    void kineticsTick(const KineticsData& arg) const;
 
 
 private:

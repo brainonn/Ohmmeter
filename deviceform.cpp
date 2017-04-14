@@ -9,7 +9,7 @@ DeviceForm::DeviceForm(QWidget *parent) :
     updatePorts();
     ohmmeter = new Ohmmeter();
     connect(ohmmeter, SIGNAL(remoteChanged(bool)), this, SLOT(on_remoteChanged(bool)));
-
+    connect(ohmmeter, SIGNAL(readingsChanged(Readings)), this, SLOT(on_readingsChanged(Readings)));
 }
 
 DeviceForm::~DeviceForm()
@@ -22,6 +22,9 @@ void DeviceForm::updatePorts()
     ui -> comboBoxPorts -> clear();
     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
         ui -> comboBoxPorts -> addItem(info.portName());
+    }
+    if(ui -> comboBoxPorts -> count() != 0) {
+        ui -> buttonAction -> setEnabled(true);
     }
 
 }
@@ -39,14 +42,18 @@ void DeviceForm::on_buttonAction_clicked()
         if(ohmmeter -> connect(currentPortName)) {
             ui -> buttonAction -> setText("Disconect");
             ui -> buttonRemote -> setEnabled(true);
-    }
+        } else {
+            QMessageBox msg;
+            msg.setText("Can't connect to the device on port " + currentPortName);
+            msg.exec();
+        }
     }
     else {
-
-        on_buttonRemote_clicked();
         ohmmeter -> disconnect();
+        ui -> lcdNumber -> display(0);
         ui -> buttonAction -> setText("Connect");
         ui -> buttonRemote -> setEnabled(false);
+        ui -> widget -> clearGraphs();
 
     }
 
@@ -54,8 +61,12 @@ void DeviceForm::on_buttonAction_clicked()
 
 void DeviceForm::on_buttonRemote_clicked()
 {
-    if (ui -> buttonRemote -> text() == "Enable") ohmmeter -> setRemote(true);
-    else ohmmeter -> setRemote(false);
+    if (ui -> buttonRemote -> text() == "Enable") {
+        ohmmeter -> setRemote(true);
+    }
+    else {
+        ohmmeter -> setRemote(false);
+    }
 }
 
 void DeviceForm::on_comboBoxRate_currentIndexChanged(int index)
@@ -63,20 +74,38 @@ void DeviceForm::on_comboBoxRate_currentIndexChanged(int index)
     ohmmeter -> setRate(index);
 }
 
-
-void DeviceForm::on_buttonZero_clicked()
-{
-
-}
-
 void DeviceForm::on_buttonScan_clicked()
 {
+    if(ui -> buttonScan -> text() == "Start") {
+        ui -> widget -> clearGraphs();
+        ui -> widget -> addGraph();
+        connect(ohmmeter, SIGNAL(dataReady(const KineticsData&)), this, SLOT(kineticsTick(const KineticsData&)));
+        ui -> buttonScan -> setText("Stop");
+        ohmmeter -> setKineticsRunning(true);
+
+    } else {
+        disconnect(ohmmeter, SIGNAL(dataReady(const KineticsData&)), this, SLOT(kineticsTick(const KineticsData&)));
+        ohmmeter -> setKineticsRunning(false);
+        ui -> buttonScan -> setText("Start");
+
+
+    }
 
 
 }
 
 void DeviceForm::on_buttonSave_clicked()
 {
+    QFile file(QDateTime::currentDateTime().toString("yyyy-MMM-dd hh:mm:ss") + ".txt");
+    if(!file.open(QIODevice::Append)) {
+        QMessageBox msg;
+        msg.setText("Can't open file");
+        msg.exec();
+        return;
+    }
+    QTextStream out(&file);
+    out << ohmmeter -> getKinetics();
+    file.close();
 
 }
 
@@ -86,7 +115,6 @@ void DeviceForm::on_remoteChanged(bool enabled)
     else ui -> buttonRemote -> setText("Enable");
     ui -> buttonScan -> setEnabled(enabled);
     ui -> buttonSave -> setEnabled(enabled);
-    ui -> buttonZero -> setEnabled(enabled);
     ui -> comboBoxRange -> setEnabled(enabled);
     ui -> comboBoxRate -> setEnabled(enabled);
     if(enabled) {
@@ -114,3 +142,30 @@ void DeviceForm::on_remoteChanged(bool enabled)
     }
 
 }
+
+void DeviceForm::on_readingsChanged(const Readings& readings)
+{
+    ui -> lcdNumber -> display(readings.value);
+    QString units = readings.units;
+    if(units == "mOhm") {
+        ui -> radioButtonUnits_mOhm -> setChecked(true);
+    } else if(units == "Ohm") {
+        ui -> radioButtonUnits_Ohm -> setChecked(true);
+    } else if(units == "KOhm") {
+        ui -> radioButtonUnits_kOhm -> setChecked(true);
+    } else if(units == "MOhm") {
+        ui -> radioButtonUnits_MOhm -> setChecked(true);
+    }
+}
+
+
+void DeviceForm::kineticsTick(const KineticsData& arg) const
+{
+
+    ui -> widget -> graph(0) -> addData(arg.getLastTime(), arg.getLastValue());
+    ui -> widget -> xAxis -> setRange(0,arg.getMaxTime());
+    ui -> widget -> yAxis -> setRange(0,arg.getMaxValue());
+    ui -> widget -> replot();
+
+}
+
