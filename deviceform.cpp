@@ -53,7 +53,7 @@ void DeviceForm::on_buttonAction_clicked()
         ui -> lcdNumber -> display(0);
         ui -> buttonAction -> setText("Connect");
         ui -> buttonRemote -> setEnabled(false);
-        ui -> widget -> clearGraphs();
+        ui -> plotWidget -> clearGraphs();
 
     }
 
@@ -77,8 +77,8 @@ void DeviceForm::on_comboBoxRate_currentIndexChanged(int index)
 void DeviceForm::on_buttonScan_clicked()
 {
     if(ui -> buttonScan -> text() == "Start") {
-        ui -> widget -> clearGraphs();
-        ui -> widget -> addGraph();
+        ui -> plotWidget -> clearGraphs();
+        ui -> plotWidget -> addGraph();
         connect(ohmmeter, SIGNAL(dataReady(const KineticsData&)), this, SLOT(kineticsTick(const KineticsData&)));
         ui -> buttonScan -> setText("Stop");
         ohmmeter -> setKineticsRunning(true);
@@ -162,10 +162,10 @@ void DeviceForm::on_readingsChanged(const Readings& readings)
 void DeviceForm::kineticsTick(const KineticsData& arg) const
 {
 
-    ui -> widget -> graph(0) -> addData(arg.getLastTime(), arg.getLastValue());
-    ui -> widget -> xAxis -> setRange(0,arg.getMaxTime());
-    ui -> widget -> yAxis -> setRange(0,arg.getMaxValue());
-    ui -> widget -> replot();
+    ui -> plotWidget -> graph(0) -> addData(arg.getLastTime(), arg.getLastValue());
+    ui -> plotWidget -> xAxis -> setRange(0,arg.getMaxTime());
+    ui -> plotWidget -> yAxis -> setRange(0,arg.getMaxValue());
+    ui -> plotWidget -> replot();
 
 }
 
