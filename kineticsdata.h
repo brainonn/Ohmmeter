@@ -6,21 +6,22 @@
 #include <QTextStream>
 
 
+
 class KineticsData
 {
     QVector<double> values;
-    QVector<int> times;
+    QVector<double> times;
     double maxValue = 0;
-    int maxTime = 0;
+    double maxTime = 0;
 public:
     KineticsData();
-    void append(double value, int time);
+    void append(double value, double time);
     double getMaxValue() const;
-    int getMaxTime() const;
+    double getMaxTime() const;
     double getLastValue() const;
-    int getLastTime() const;
+    double getLastTime() const;
     QVector<double>& getValues();
-    QVector<int>& getTimes();
+    QVector<double>& getTimes();
     void clear();
     friend QTextStream& operator<<(QTextStream& stream, KineticsData& data);
 };

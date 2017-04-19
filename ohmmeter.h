@@ -5,13 +5,14 @@
 #include <QTimer>
 #include <QRegExp>
 #include <kineticsdata.h>
+#include <timerhandler.h>
 
 
 enum Range {r20m = 1, r200m, r2, r20, r200, r2k, r20k, r200k, r2M};
 enum Rate {fast, slow};
 const int firstWaitTime = 50;
 const int additionalWaitTime = 10;
-const int updateInterval = 250;
+const int updateInterval = 100;
 struct Readings {
     double value = 0;
     QString units = "mOhm";

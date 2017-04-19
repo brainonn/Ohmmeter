@@ -96,8 +96,9 @@ void DeviceForm::on_buttonScan_clicked()
 
 void DeviceForm::on_buttonSave_clicked()
 {
-    QFile file(QDateTime::currentDateTime().toString("yyyy-MMM-dd hh:mm:ss") + ".txt");
-    if(!file.open(QIODevice::Append)) {
+    QString filename = "kinetics.txt";
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QMessageBox msg;
         msg.setText("Can't open file");
         msg.exec();

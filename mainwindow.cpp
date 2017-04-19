@@ -29,7 +29,7 @@ void MainWindow::on_actionUpdateCOMPortsList_triggered()
 {
     int deviceNumber = tabWidget -> count();
     for(int i = 0; i < deviceNumber; i++) {
-        (qobject_cast<DeviceForm*> (tabWidget -> widget(i))) -> updatePorts(); //casting QWidget* to DeviceForm*, not sure if it works
+        (qobject_cast<DeviceForm*> (tabWidget -> widget(i))) -> updatePorts();
 
     }
 }
