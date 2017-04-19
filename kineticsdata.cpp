@@ -7,7 +7,7 @@ KineticsData::KineticsData()
 
 }
 
-void KineticsData::append(double value, int time)
+void KineticsData::append(double value, double time)
 {
     values.append(value);
     times.append(time);
@@ -20,12 +20,12 @@ double KineticsData::getMaxValue() const
     return maxValue;
 }
 
-int KineticsData::getMaxTime() const
+double KineticsData::getMaxTime() const
 {
     return maxTime;
 }
 
-int KineticsData::getLastTime() const
+double KineticsData::getLastTime() const
 {
     if(times.isEmpty()) return 0;
     return times.last();
@@ -42,7 +42,7 @@ QVector<double>& KineticsData::getValues()
     return values;
 }
 
-QVector<int>& KineticsData::getTimes()
+QVector<double>& KineticsData::getTimes()
 {
     return times;
 }
@@ -58,9 +58,9 @@ void KineticsData::clear()
 QTextStream& operator<<(QTextStream& stream, KineticsData& data)
 {
     QVector<double>::iterator itValues = data.values.begin();
-    QVector<int>::iterator itTimes = data.times.begin();
+    QVector<double>::iterator itTimes = data.times.begin();
     while(itValues != data.values.end()) {
-        stream << *itTimes << "\t" << *itValues << "\n";
+        stream << *itTimes << '\t'  << *itValues << '\n';
         itValues ++;
         itTimes ++;
     }

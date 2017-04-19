@@ -18,13 +18,15 @@ SOURCES += main.cpp\
     deviceform.cpp \
     qcustomplot.cpp \
     ohmmeter.cpp \
-    kineticsdata.cpp
+    kineticsdata.cpp \
+    timerhandler.cpp
 
 HEADERS  += mainwindow.h \
     deviceform.h \
     qcustomplot.h \
     ohmmeter.h \
-    kineticsdata.h
+    kineticsdata.h \
+    timerhandler.h
 
 FORMS    += mainwindow.ui \
     deviceform.ui

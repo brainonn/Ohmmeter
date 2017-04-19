@@ -1,7 +1,6 @@
 #include "ohmmeter.h"
 #include <QDebug>
 
-
 bool Readings::operator!=(const Readings& arg) const {
     return (this -> value != arg.value) || (this -> units != arg.units);
 }
@@ -17,6 +16,7 @@ Ohmmeter::Ohmmeter() : QObject()
 
 Ohmmeter::~Ohmmeter()
 {
+    if(serial -> isOpen()) disconnect();
     delete serial;
     delete timer;
 }
@@ -34,25 +34,26 @@ bool Ohmmeter::connect(QString &portName)
     }
     setRemote(true);
     timer -> start(updateInterval);
+    getCurrentReadings();
     return true;
 
 }
 
 void Ohmmeter::disconnect()
 {
-    timer -> stop();
+    if(timer -> isActive()) timer -> stop();
     int i = 0;
     do {
         setRemote(false);
         i++;
     } while(getResponse() != "[OK]" && i <= 500);
-
     serial -> close();
 
 }
 
 void Ohmmeter::setRemote(bool enabled)
 {
+    TimerHandler handler(timer);
     if(enabled) {
         QString commEnableRemote = "[+]";
         serial -> write(commEnableRemote.toLocal8Bit());
@@ -65,12 +66,14 @@ void Ohmmeter::setRemote(bool enabled)
 
 void Ohmmeter::setRange(int range)
 {
+    TimerHandler handler(timer);
     QString commSetRange = "[R" + QString::number(range) + "]";
     serial -> write(commSetRange.toLocal8Bit());
 }
 
 void Ohmmeter::setRate(int rate)
 {
+    TimerHandler handler(timer);
     QString commSetRate = "[F" + QString::number(rate) + "]";
     serial -> write(commSetRate.toLocal8Bit());
 }
@@ -79,7 +82,7 @@ void Ohmmeter::getCurrentReadings()
 {
     QString commGetReadings = "[?D]";
     Readings previous = currentReadings;
-    int elapsedTime = 0;
+    double elapsedTime = 0;
     serial -> write(commGetReadings.toLocal8Bit());
     QString response = getResponse();
     if(isKineticsRunning) elapsedTime = 0.001 * (time -> elapsed() - additionalWaitTime);
@@ -97,6 +100,7 @@ void Ohmmeter::getCurrentReadings()
 
 QString Ohmmeter::getResponse() const
 {
+    TimerHandler handler(timer);
     QByteArray tmp;
     if(serial->waitForReadyRead(firstWaitTime)) {
         tmp = serial->readAll();
@@ -122,8 +126,6 @@ Readings Ohmmeter::parseReadingsString(const QString& str)
         value.remove(0, value.indexOf('.') - 1);
     }
     units.remove(0, units.indexOf(QRegExp("[m, K, M]?Ohm")));
-    qDebug() << value;
-    qDebug() << units;
     Readings res;
     res.value = value.toDouble();
     res.units = units;
